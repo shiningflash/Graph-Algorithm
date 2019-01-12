@@ -50,9 +50,9 @@ using namespace std;
 void dfsVISIT(int u, vector <int> adj[], vector <bool> &visited) {
     visited[u] = true;
     printf("%d ", u);
-    for (int i = 0; i < adj[u].size(); i++) {
-        u = adj[u][i];
-        if (!visited[u]) dfsVISIT(u, adj, visited);
+    for (int v = 0; v < adj[u].size(); v++) {
+        int x = adj[u][v];
+        if (!visited[x]) dfsVISIT(x, adj, visited);
     }
 }
 
@@ -64,7 +64,7 @@ void DFS(vector <int> adj[], int nVertex) {
 }
 
 int main() {
-    //  build graph
+    // build graph
     int nVertex, nEdge, u, v;
     scanf("%d %d", &nVertex, &nEdge);
     // vector <int> *adj = new vector <int>[nVertex];
@@ -74,7 +74,7 @@ int main() {
         adj[u].pb(v);
         adj[v].pb(u);
     }
-    DFS(adj, 5); // source node - 5
+    DFS(adj, nVertex); // source node - 5
 }
 
 /******************
@@ -92,5 +92,5 @@ int main() {
 
  OUTPUT:
   -----
-0 1 4 3 2
+0 1 2 3 4
  *****************/
