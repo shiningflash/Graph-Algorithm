@@ -1,10 +1,10 @@
 /*
-    implementation of BFS simply
-    using vector and queue
-    @author Amirul islam
+  implementation of BFS simply
+  using vector and queue
+  @author Amirul islam
                    _
-    _|_ o._ o._  __|_| _. _|_
-    _>| ||| ||| |(_|| |(_|_>| |
+   _|_ o._ o._  __|_| _. _|_
+  _>| ||| ||| |(_|| |(_|_>| |
                 _|
 */
 
