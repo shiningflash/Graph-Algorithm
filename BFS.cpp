@@ -45,7 +45,7 @@
 typedef long long ll;
 using namespace std;
 
-/**********************End*******************/
+/*--------------**----------------*/
 
 vector <bool> vis;
 vector <vector <int> > g;
