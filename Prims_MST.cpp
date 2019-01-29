@@ -62,9 +62,9 @@ inline void Prim_MST() {
 		int u = q.top().second;
 		q.pop();
 		vis[u] = true;
-		for (auto x : g[u]) {
-			int v = x.first;
-			int w = x.second;
+		for (int x = 0; x < (int) g[u].size(); x++) {
+			int v = g[u][x].first;
+			int w = g[u][x].second;
 			if (!vis[v] && dis[v] > w) {
 				dis[v] = w;
 				q.push(make_pair(dis[v], v));
