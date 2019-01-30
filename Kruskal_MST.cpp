@@ -66,7 +66,7 @@ inline void kruskal_mst() {
 	sort(g.begin(), g.end());
 	for (int i = 0; i < nodes; i++) parent[i] = i;
 	int cnt = 0, tcost = 0, u, v, w;
-	for (int i = 0; i < (int) g.size(); i++) {
+	for (int i = 0; i < edges; i++) { // edges = g.size()
 		u = find(g[i].u);
 		v = find(g[i].v);
 		if (u != v) {
