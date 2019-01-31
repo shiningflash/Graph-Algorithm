@@ -77,6 +77,17 @@ void dijkstra(int src) {
 
 int main() {
 	scanf("%d", &nodes);
+	/*********************************
+	CLEAR(g);
+	for (int i = 0; i < edges; i++) {
+		scanf("%d %d %d", &u, &v, &w);
+		if (g[u][v] != 0)
+			if (g[u][v] < w)
+				continue;
+		g[u][v] = w;
+		g[v][u] = w;
+	}
+	**********************************/
 	for (int i = 0; i < nodes; i++)
 		for (int j = 0; j < nodes; j++)
 			scanf("%d", &g[i][j]);
