@@ -6,75 +6,27 @@
  * DFS of Unweighted and Undirected
  *********************************************/
 
-#include <cstdio>
-#include <iomanip>
-#include <cstring>
-#include <cmath>
-#include <cstdlib>
-#include <cctype>
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <queue>
-#include <map>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <list>
-#include <iostream>
-#include <assert.h>
-#include <unordered_set>
-
-#define mem(x,y) memset(x,y,sizeof(x))
-#define CLEAR(x) memset(x,0,sizeof(x))
-
-#define pb push_back
-#define Sort(v) sort(v.begin(),v.end())
-#define _sort(s, n) sort(s, s+n)
-#define sqr(x) ((x)*(x))
-
-#define le 50001
-#define ERR 1e-9
-#define pi (2*acos(0))
-#define PI 3.141592653589793
-#define MX 1e9
-
-#define scanint(a) scanf("%d", &a)
-#define scanLLD(a) scanf("%lld", &a)
-
-typedef long long ll;
+#include <bits/stdc++.h>
 using namespace std;
 
-/* -------------------------- */
+int n, e, u, v;
+vector <vector<int> > g;
+vector <bool> vis;
 
-void dfsVISIT(int u, vector <int> adj[], vector <bool> &visited) {
-    visited[u] = true;
+void dfs_visit(int u) {
+    vis[u] = 1;
     printf("%d ", u);
-    for (int v = 0; v < adj[u].size(); v++) {
-        int x = adj[u][v];
-        if (!visited[x]) dfsVISIT(x, adj, visited);
-    }
-}
-
-void DFS(vector <int> adj[], int nVertex) {
-    vector <bool> visited(nVertex, false);
-    for (int u = 0; u < nVertex; u++) {
-        if (!visited[u]) dfsVISIT(u, adj, visited);
-    }
+    for (int v = 0; v < g[u].size(); v++)
+        if (!vis[g[u][v]]) dfs_visit(g[u][v]);
 }
 
 int main() {
-    // build graph
-    int nVertex, nEdge, u, v;
-    scanf("%d %d", &nVertex, &nEdge);
-    // vector <int> *adj = new vector <int>[nVertex];
-    vector <int> adj[nVertex];
-    for (int i = 0; i < nEdge; i++) {
-        scanf("%d %d", &u, &v);
-        adj[u].pb(v);
-        adj[v].pb(u);
-    }
-    DFS(adj, nVertex); // source node - 5
+    scanf("%d %d", &n, &e);
+    vis.assign(n, 0);
+    g.assign(n, vector<int>());
+    while (e--) scanf("%d %d", &u, &v), g[u].push_back(v), g[v].push_back(u);
+    for (int i = 0; i < n; i++) if (!vis[i]) dfs_visit(i);
+    puts("");
 }
 
 /******************
