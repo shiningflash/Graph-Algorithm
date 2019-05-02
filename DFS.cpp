@@ -32,7 +32,7 @@ int main() {
 /******************
  INPUT
   ---
-  - 1st line, 5 nVertex, 7 nEdge
+  - 1st line, 6 Vertex, 5 Edge
 6 5
 0 1
 1 2
