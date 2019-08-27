@@ -1,3 +1,6 @@
+// k'th shortest path
+// Not the Best :: UVA - 10740
+
 #include <bits/stdc++.h>
 using namespace std;
 #define mx 105
@@ -56,3 +59,30 @@ int main() {
         printf("%d\n", dijkstra(x, y, k));
     }
 }
+
+/*
+Input:
+3 3
+1 3 4
+1 3 3
+1 2 4
+2 3 5
+5 6
+5 2 5
+1 2 2
+2 5 4
+3 2 3
+4 3 1
+5 1 3
+5 4 2
+2 2
+1 2 3
+1 2 5
+2 2 2
+0 0
+
+Output:
+-1
+15
+9
+*/
