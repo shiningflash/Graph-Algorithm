@@ -10,29 +10,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, e, u, v;
-vector <vector <int> > g;
-vector <bool> vis;
+const int mx = 1e5;
+vector <int> g[mx];
+int vis[mx];
 
-void BFS(int u) {
+void bfs(int u) {
     queue <int> q;
     q.push(u);
     vis[u] = 1;
     while (!q.empty()) {
-        u = q.front(); q.pop();
+        u = q.front();
+        q.pop();
         printf("%d ", u);
-        for (int v = 0; v < g[u].size(); v++)
-            if (!vis[g[u][v]]) q.push(g[u][v]), vis[g[u][v]] = 1; 
+        for (int i = 0; i < g[u].size(); i++) {
+            int v = g[u][i];
+            if (!vis[v]) q.push(v), vis[v] = 1;
+        }
     }
 }
 
 int main() {
-    scanf("%d %d", &n, &e);
-    vis.assign(n, 0);
-    g.assign(n, vector<int>());
-    while (e--) scanf("%d %d", &u, &v), g[u].push_back(v);
-    for (int i = 0; i < n; i++) if (!vis[i]) BFS(i); 
-    puts("");
+    //freopen("in", "r", stdin);
+    //ios_base::sync_with_stdio(0);
+    //cin.tie(NULL);
+    
+    int node, edge, u, v;
+    scanf("%d %d", &node, &edge);
+    while (edge--) scanf("%d %d", &u, &v), g[u].push_back(v);
+    for (int i = 0; i < node; i++) if (!vis[i]) bfs(i);
+    printf("\n");
+    return 0;
 }
 
 /*
