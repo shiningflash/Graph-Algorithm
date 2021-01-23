@@ -9,24 +9,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, e, u, v;
-vector <vector<int> > g;
-vector <bool> vis;
+const int mx = 1e5;
 
-void dfs_visit(int u) {
-    vis[u] = 1;
-    printf("%d ", u);
-    for (int v = 0; v < g[u].size(); v++)
-        if (!vis[g[u][v]]) dfs_visit(g[u][v]);
+bool vis[mx];
+vector <int> graph[mx];
+
+void dfs(int u) {
+    cout << u << " ";
+    vis[u] = true;
+
+    for (int i = 0; i < graph[u].size(); i++) {
+        int v = graph[u][i];
+        if (!vis[v]) {
+            dfs(v);
+        }
+    }
 }
 
 int main() {
-    scanf("%d %d", &n, &e);
-    vis.assign(n, 0);
-    g.assign(n, vector<int>());
-    while (e--) scanf("%d %d", &u, &v), g[u].push_back(v), g[v].push_back(u);
-    for (int i = 0; i < n; i++) if (!vis[i]) dfs_visit(i);
-    puts("");
+    // freopen("in", "r", stdin);
+
+    int node, edge, u, v;
+    cin >> node >> edge;
+    while (edge--) {
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+    for (int i = 0; i < node; i++) {
+        if (!vis[i]) {
+            dfs(i);
+        }
+    }
+    cout << "\n";
+    return 0;
 }
 
 /******************
