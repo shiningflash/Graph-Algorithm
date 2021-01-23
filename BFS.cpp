@@ -11,34 +11,44 @@
 using namespace std;
 
 const int mx = 1e5;
-vector <int> g[mx];
-int vis[mx];
+
+bool vis[mx];
+vector <int> graph[mx];
 
 void bfs(int u) {
     queue <int> q;
     q.push(u);
-    vis[u] = 1;
+    vis[u] = true;
+
     while (!q.empty()) {
         u = q.front();
         q.pop();
-        printf("%d ", u);
-        for (int i = 0; i < g[u].size(); i++) {
-            int v = g[u][i];
-            if (!vis[v]) q.push(v), vis[v] = 1;
+        cout << u << " ";
+        for (int i = 0; i < graph[u].size(); i++) {
+            int v = graph[u][i];
+            if (!vis[v]) {
+                q.push(v);
+                vis[v] = true;
+            }
         }
     }
 }
 
 int main() {
-    //freopen("in", "r", stdin);
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(NULL);
-    
+    freopen("in", "r", stdin);
+
     int node, edge, u, v;
-    scanf("%d %d", &node, &edge);
-    while (edge--) scanf("%d %d", &u, &v), g[u].push_back(v);
-    for (int i = 0; i < node; i++) if (!vis[i]) bfs(i);
-    printf("\n");
+    cin >> node >> edge;
+    while (edge--) {
+        cin >> u >> v;
+        graph[u].push_back(v);
+    }
+    for (int i = 0; i < node; i++) {
+        if (!vis[i]) {
+            bfs(i);
+        }
+    }
+    cout << "\n";
     return 0;
 }
 
