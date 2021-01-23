@@ -1,6 +1,7 @@
 /*
   implementation of BFS on 2D grid
   @author Amirul islam :: Nov 1, 2019
+  @modified Amirul islam :: Jan 24, 2021
                    _
    _|_ o._ o._  __|_| _. _|_
   _>| ||| ||| |(_|| |(_|_>| |
@@ -9,70 +10,79 @@
 
 #include <bits/stdc++.h>
 using namespace std;
-#define pii pair <int, int>
-#define mp make_pair
-#define isInside(x, y, row, col) (x >= 0 && x < row && y >= 0 && y < col)
 
 const int mx = 1e3;
 
-int dx[] = {-1, 0, 1, 0};
-int dy[] = {0, 1, 0, -1};
-
-char cell[mx][mx];
-bool vis[mx][mx];
+char grid[mx][mx];
+int vis [mx][mx];
 int dis[mx][mx];
 
+int dx[] = {0, 1, 0, -1};
+int dy[] = {1, 0, -1, 0};
+
+bool isInside(int x, int y, int row, int col) {
+    return x >= 0 && x < row && y >= 0 && y < col;
+}
+
 void bfs(int sx, int sy, int row, int col) {
-    vis[sx][sy] = 1;
-    queue <pii> q;
-    q.push(mp(sx, sy));
+    vis[sx][sy] = true;
+    queue < pair <int, int> > q;
+    q.push(make_pair(sx, sy));
+
     while (!q.empty()) {
-        pii top = q.front();
+        pair <int, int> top = q.front();
         q.pop();
+
         for (int k = 0; k < 4; k++) {
             int nx = top.first + dx[k];
             int ny = top.second + dy[k];
-            if (isInside(nx, ny, row, col) && cell[nx][ny] != '#' && !vis[nx][ny]) {
-                vis[nx][ny] = 1;
-                dis[nx][ny] = dis[top.first][top.second] + 1;
-                q.push(mp(nx, ny));
-            }
+
+            if (isInside(nx, ny, row, col) &&
+                grid[nx][ny] != '#' && !vis[nx][ny]) {
+                    vis[nx][ny] = true;
+                    dis[nx][ny] = dis[top.first][top.second] + 1;
+                    q.push(make_pair(nx, ny));
+                }
         }
     }
 }
 
+void printGrid(int row, int col) {
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            cout << dis[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+
 int main() {
-    //freopen("in", "r", stdin);
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(NULL);
+    freopen("in", "r", stdin);
+
+    int row, col;
+    cin >> row >> col;
     
-    int row, col, sx, sy, cnt(0);
-    scanf("%d %d", &row, &col);
     swap(row, col);
+
     for (int i = 0; i < row; i++) {
-        scanf("%s", cell[i]);
+        cin >> grid[i];
     }
+
     bfs(0, 0, row, col);
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) printf("%d ", dis[i][j]);
-        printf("\n");
-    }
+
+    printGrid(row, col);
+
     return 0;
 }
 
 /*
-
 Input:
-
 3 3
 ...
 #.#
 ...
-
 Output:
-
 0 1 2 
 0 2 0 
 4 3 4
-
  */
