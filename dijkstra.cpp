@@ -1,43 +1,63 @@
-// complexity: O(V*logV+E)
-// nodes can be maximum 10000
+/*
+  @topic      - Shortest Path Algorithm
+  @complexity - O(V*logV+E) - Dijkstra’s algorithm
+  @author     - Amirul islam
+                   _
+   _|_ o._ o._  __|_| _. _|_
+  _>| ||| ||| |(_|| |(_|_>| |
+                _|
+*/
 
 #include <bits/stdc++.h>
 using namespace std;
-#define pb push_back
-#define pii pair <int, int>
-#define inf 1<<30
-#define mx 10005
 
-int nodes, edges, dis[mx];
-vector <pii> g[mx];
+const int inf = 1 << 30;
+const int mx = 1e3;
 
-struct node {
+vector < pair <int, int> > graph[mx];
+
+int dis[mx];
+
+struct Node {
     int u, w;
-    node(int u, int w) { this->u = u, this->w = w; }
-    bool operator < (const node& p) const { return w < p.w; }
+
+    Node(int u, int w) {
+        this->u = u;
+        this->w = w;
+    }
+
+    bool operator < (const Node& N) const {
+        return w < N.w;
+    }
 };
 
-void dijkstra(int src) {
-    for (int i = 1; i <= nodes; i++) dis[i] = inf;
-    priority_queue <node> q;
-    q.push(node(src, 0));
+void dijkstra(int src, int nodes) {
+    for (int i = 1; i <= nodes; i++) {
+        dis[i] = inf;
+    }
+
+    priority_queue <Node> q;
+    q.push(Node(src, 0));
     dis[src] = 0;
 
     while (!q.empty()) {
-        node top = q.top(); q.pop();
+        Node top = q.top();
+        q.pop();
         int u = top.u;
-        for (int i = 0; i < (int) g[u].size(); i++) {
-            int v = g[u][i].first;
-            int w = g[u][i].second;
+
+        for (int i = 0; i < graph[u].size(); i++) {
+            int v = graph[u][i].first;
+            int w = graph[u][i].second;
+
             if (dis[u] + w < dis[v]) {
                 dis[v] = dis[u] + w;
-                q.push(node(v, dis[v]));
+                q.push(Node(v, dis[v]));
             }
         }
     }
 }
 
-void print_dis(int src) {
+void print_distance(int src, int nodes) {
     printf("u - v = w\n-----------\n");
     for (int i = 1; i <= nodes; i++) {
         printf("%d - %d = %d\n", src, i, dis[i]);
@@ -45,17 +65,25 @@ void print_dis(int src) {
 }
 
 int main() {
-    freopen("in", "r", stdin);
-    scanf("%d %d", &nodes, &edges);
-    int u, v, w, src;
+    // freopen("in", "r", stdin);
+
+    int nodes, edges, u, v, w, src;
+    cin >> nodes >> edges;
+
     while (edges--) {
-        scanf("%d %d %d", &u, &v, &w);
-        g[u].pb({v, w});
-        g[v].pb({u, w});
+        cin >> u >> v >> w;
+        graph[u].push_back(make_pair(v, w));
+        graph[v].push_back(make_pair(u, w));
     }
-    scanf("%d", &src);
-    dijkstra(src);
-    print_dis(src);
+
+    cout << "Enter source: ";
+    cin >> src;
+
+    dijkstra(src, nodes);
+
+    print_distance(src, nodes);
+
+    return 0;
 }
 
 /*
@@ -68,11 +96,12 @@ Input:
 1 3 25
 3 2 10
 2 4 2
+
 1
 
 Output:
 u - v = w
------------
+---------
 1 - 1 = 0
 1 - 2 = 25
 1 - 3 = 15
