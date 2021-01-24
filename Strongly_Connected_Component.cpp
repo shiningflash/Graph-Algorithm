@@ -11,62 +11,73 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int mx = 1e4;
+const int mx = 1e3;
 
-vector <int> g1[mx], g2[mx];
+vector <int> graph[mx], revgraph[mx];
+
 bool vis[mx];
-stack <int> s1;
+stack <int> st;
 
 void dfs1(int u) {
-    vis[u] = true;
-    for (int v = 0; v < g1[u].size(); v++) {
-        if (!vis[g1[u][v]]) {
-            dfs1(g1[u][v]);
+    vis[u] = 1;
+
+    for (int i = 0; i < revgraph[u].size(); i++) {
+        int v = revgraph[u][i];
+
+        if (vis[v] == 0) {
+            dfs1(v);
         }
     }
-    s1.push(u);
+
+    st.push(u);
 }
 
 void dfs2(int u) {
-    vis[u] = true;
+    vis[u] = 1;
     cout << u << " ";
-    for (int v = 0; v < g2[u].size(); v++) {
-        if (!vis[g2[u][v]]) {
-            dfs2(g2[u][v]);
+
+    for (int i = 0; i < graph[u].size(); i++) {
+        int v = graph[u][i];
+
+        if (vis[v] == 0) {
+            dfs2(v);
         }
     }
 }
 
 int main() {
-    // freopen("in", "r", stdin);
-
     int n, u, v;
     cin >> n;
+
     for (int i = 0; i < n; i++) {
         cin >> u >> v;
-        g1[u].push_back(v);
-        g2[v].push_back(u);
+        graph[u].push_back(v);
+        revgraph[v].push_back(u);
     }
+
     memset(vis, 0, sizeof(vis));
     for (int i = 0; i < n; i++) {
-        if (!vis[i]) {
+        if (vis[i] == 0) {
             dfs1(i);
         }
     }
+
     memset(vis, 0, sizeof(vis));
-    while (!s1.empty()) {
-        int u = s1.top();
-        s1.pop();
-        if (!vis[u]) {
+    while (!st.empty()) {
+        int u = st.top();
+        st.pop();
+
+        if (vis[u] == 0) {
             dfs2(u);
-            cout << endl;
+            cout << "\n";
         }
     }
+    return 0;
 }
 
 /*
 Input:
------
+-
 5
 1 0
 0 2
@@ -75,7 +86,7 @@ Input:
 3 4
 
 Output:
-------
+-
 0 1 2 
 3 
 4 
