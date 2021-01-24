@@ -1,103 +1,108 @@
-// Prim’s Minimum Spanning Tree (MST)
-// using Adj. List, TC - O(ElogV)
- 
-#include <cstdio>
-#include <iomanip>
-#include <cstring>
-#include <cmath>
-#include <cstdlib>
-#include <cctype>
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <queue>
-#include <map>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <list>
-#include <iostream>
-#include <assert.h>
-#include <limits>
- 
-#define mem(x, y) memset(x,y,sizeof(x))
-#define CLEAR(x) memset(x,0,sizeof(x))
- 
-#define pb push_back
-#define Sort(v) sort(v.begin(),v.end())
-#define _sort(s, n) sort(s, s+n)
-#define sqr(x) ((x)*(x))
- 
-#define le 5001
-#define ERR 1e-9
-#define pi (2*acos(0))
-#define PI 3.141592653589793
-#define INT_MAX 2147483647
- 
-#define scanint(a) scanf("%d",&a)
-#define scanLLD(a) scanf("%lld",&a)
- 
-typedef long long ll;
+/*
+  @topic      - Minimum Spanning Tree (MST)
+  @complexity - O(ElogV) - Prim’s algorithm
+  @author     - Amirul islam
+                   _
+   _|_ o._ o._  __|_| _. _|_
+  _>| ||| ||| |(_|| |(_|_>| |
+                _|
+*/
+
+#include <bits/stdc++.h>
 using namespace std;
- 
-////////////////////////////////////////
- 
-const int MX = 10000;
-typedef pair <int, int> dual;
- 
-int nodes, edges;
-vector <dual> g[MX];
- 
-inline void Prim_MST() {
-	vector <int> dis(nodes, INT_MAX);
-	vector <bool> vis(nodes, false);
-	vector <int> parent(nodes, -1);
-	int source = 0;
-	dis[0] = 0;
- 
-	priority_queue <dual, vector <dual>, greater <dual> > q;
-	q.push(make_pair(0, source));
- 
-	while (!q.empty()) {
-		int u = q.top().second;
-		q.pop();
-		vis[u] = true;
-		for (int x = 0; x < (int) g[u].size(); x++) {
-			int v = g[u][x].first;
-			int w = g[u][x].second;
-			if (!vis[v] && dis[v] > w) {
-				dis[v] = w;
-				q.push(make_pair(dis[v], v));
-				parent[v] = u;
-			}
-		}
-	}
-	for (int i = 1; i < nodes; i++)
-		printf("%d - %d \t%d\n", parent[i], i, dis[i]);
-}
- 
-int main() {
-    scanf("%d %d", &nodes, &edges);
-    for (int i = 0; i <= nodes; i++)
-        g[i].clear();
-    for (int i = 0, u, v, w; i < edges; i++) {
-        scanf("%d %d %d", &u, &v, &w);
-        g[u].push_back(make_pair(v, w));
+
+const int mx = 1e3;
+const int inf = 1 << 30;
+
+vector < pair <int, int> > graph[mx];
+
+int _distance[mx];
+bool visited[mx];
+int parent[mx];
+
+struct Node {
+    int u, w;
+
+    Node(int u, int w) {
+        this->u = u;
+        this->w = w;
     }
-    Prim_MST();
+
+    bool operator < (const Node& N) const {
+        return w > N.w;
+    }
+};
+
+void prims_MST(int source, int nodes) {
+    for (int i = 0; i < nodes; i++) {
+        _distance[i] = inf;
+        parent[i] = -1;
+    }
+
+    visited[source] = true;
+    _distance[source] = 0;
+
+    priority_queue <Node> q;
+    q.push(Node(source, 0));
+
+    while (!q.empty()) {
+        int u = q.top().u;
+        q.pop();
+        visited[u] = true;
+
+        for (int i = 0; i < graph[u].size(); i++) {
+            int v = graph[u][i].first;
+            int w = graph[u][i].second;
+
+            if (!visited[v] && _distance[v] > w) {
+                _distance[v] = w;
+                q.push(Node(v, _distance[v]));
+                parent[v] = u;
+            }
+        }
+    }
+}
+
+void print_MST(int source, int nodes) {
+    for (int i = 0; i < nodes; i++) {
+        if (i != source) {
+            cout << "( " << parent[i] << " - " << i << 
+                " ) = " << _distance[i] << "\n";
+        }
+    }
+}
+
+int main() {
+    freopen("in", "r", stdin);
+
+    int nodes, edges, u, v, w;
+    cin >> nodes >> edges;
+    while (edges--) {
+        cin >> u >> v >> w;
+        graph[u].push_back(make_pair(v, w));
+    }
+
+    int source = 0;
+    prims_MST(source, nodes);
+    
+    print_MST(source, nodes);
+
     return 0;
 }
 
-/********
- stdin 
+/*
+ stdin
+ - 
 4 5
 0 1 2
 0 2 3
 0 3 1
 2 1 2
 3 2 2
- stdout 
-0 - 1 	2
-3 - 2 	2
-0 - 3 	1
- *******/
+ 
+ stdout
+ -
+( 0 - 1 ) = 2
+( 3 - 2 ) = 2
+( 0 - 3 ) = 1
+ */
