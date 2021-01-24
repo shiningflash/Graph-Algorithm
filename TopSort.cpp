@@ -1,84 +1,59 @@
-/*********************************************
+/*
  * Topological Sort (bfs approach)
  * @author Amirul Islam (shiningfalsh)
- *********************************************/
+                   _
+   _|_ o._ o._  __|_| _. _|_
+  _>| ||| ||| |(_|| |(_|_>| |
+                _|
+*/
 
-#include <cstdio>
-#include <iomanip>
-#include <cstring>
-#include <cmath>
-#include <cstdlib>
-#include <cctype>
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <queue>
-#include <map>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <list>
-#include <iostream>
-#include <assert.h>
-
-/**Define memory set function**/
-#define mem(x,y) memset(x,y,sizeof(x))
-#define CLEAR(x) memset(x,0,sizeof(x))
-
-/**Define function and object**/
-#define pb push_back
-#define Sort(v) sort(v.begin(),v.end())
-#define _sort(s, n) sort(s, s+n)
-#define sqr(x) ((x)*(x))
-
-/**Define constant value**/
-#define le 5001
-#define ERR 1e-9
-#define pi (2*acos(0))
-#define PI 3.141592653589793
-
-/**Define input**/
-#define scanint(a) scanf("%d",&a)
-#define scanLLD(a) scanf("%lld",&a)
-
-typedef unsigned long long ll;
+#include <bits/stdc++.h>
 using namespace std;
 
-/********* END **********/
+const int mx = 1e3;
 
-const int MAX = 105;
-vector <int> g[MAX];
-int vis[MAX];
-int t, n, x, y, l, u, v, z, cnt = 0;
+int vis[mx];
+vector <int> graph[mx];
 
-inline void bfs() {
+void bfs(int node) {
     queue <int> q;
-    for (int i = 1; i <= x; i++)
-        if (!vis[i]) q.push(i);
+
+    for (int i = 1; i <= node; i++) {
+        if (vis[i] == 0) {
+            q.push(i);
+        }
+    }
 
     while (!q.empty()) {
-        int v = q.front();
+        int u = q.front();
         q.pop();
-        printf("%d ", v);
-        for (auto i: g[v]) {
-            vis[i]--;
-            if (!vis[i]) q.push(i);
+        cout << u << " ";
+
+        for (int i = 0; i < graph[u].size(); i++) {
+            int v = graph[u][i];
+            vis[v]--;
+
+            if (vis[v] == 0) {
+                q.push(v);
+            }
         }
     }
 }
 
 int main() {
-    while (scanf("%d %d", &x, &y), (x + y)) {
-        CLEAR(vis);
-        for (int i = 1; i <= x; g[i].clear(), i++);
-        while(y--) {
-            scanf("%d %d", &u, &v);
-            g[u].pb(v);
-            vis[v]++;
-        }
-        bfs();
-        printf("\n");
+    freopen("in", "r", stdin);
+
+    int node, edge, u, v;
+    cin >> node >> edge;
+    while (edge--) {
+        cin >> u >> v;
+        graph[u].push_back(v);
+        vis[v]++;
     }
+
+    bfs(node);
+    
+    cout << "\n";
     return 0;
 }
 
@@ -90,7 +65,6 @@ Input:
 2 3
 1 3
 1 5
-0 0
 
 Output:
 ------
