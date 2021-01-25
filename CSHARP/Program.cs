@@ -7,6 +7,7 @@ public class Program {
         // BFS bfs = new BFS();
         // bfs.manageBFS(lines);
 
-        
+        DFS dfs = new DFS();
+        dfs.manageDFS(lines);
     }
 }
