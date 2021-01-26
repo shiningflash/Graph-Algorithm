@@ -13,7 +13,10 @@ public class Program {
         // TopSort ts = new TopSort();
         // ts.manageTopSort(lines);
 
-        Dijkstra dijkstra = new Dijkstra();
-        dijkstra.manageDijkstra(lines);
+        // Dijkstra dijkstra = new Dijkstra();
+        // dijkstra.manageDijkstra(lines);
+
+        PrimsShortestPath psp = new PrimsShortestPath();
+        psp.managePrimsShortestPath(lines);
     }
 }
