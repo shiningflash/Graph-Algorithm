@@ -2,6 +2,7 @@
 
 public class Program {
     public static void Main(string[] args) {
+
         string[] lines = System.IO.File.ReadAllLines("in.txt");
 
         // BFS bfs = new BFS();
@@ -16,7 +17,11 @@ public class Program {
         // Dijkstra dijkstra = new Dijkstra();
         // dijkstra.manageDijkstra(lines);
 
-        PrimsShortestPath psp = new PrimsShortestPath();
-        psp.managePrimsShortestPath(lines);
+        // PrimsMST pmst = new PrimsMST();
+        // pmst.managePrimsMST(lines);
+
+        KruskalMST kmst = new KruskalMST();
+        kmst.manageKruskalMST(lines);
+
     }
 }

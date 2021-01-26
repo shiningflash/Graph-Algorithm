@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public class PrimsShortestPath {
+public class PrimsMST {
 
     public struct Node {
         public int v, w;
@@ -17,7 +17,7 @@ public class PrimsShortestPath {
     int[] dis, parent;
     bool[] vis;
 
-    public void initPrimsShortestPath(int nodes, int edges) {
+    public void initPrimsMST(int nodes, int edges) {
         this.nodes = nodes;
         this.edges = edges;
 
@@ -42,7 +42,7 @@ public class PrimsShortestPath {
         return minIdx;
     }
 
-    public void prims_shortest_path(int source) {
+    public void prims_mst(int source) {
         for (int i = 0; i < nodes; i++) {
             dis[i] = int.MaxValue;
             parent[i] = -1;
@@ -75,12 +75,12 @@ public class PrimsShortestPath {
         }
     }
 
-    public void managePrimsShortestPath(string[] lines) {
+    public void managePrimsMST(string[] lines) {
         string[] line1 = lines[0].Split(' ');
         int nodes = int.Parse(line1[0]);
         int edges = int.Parse(line1[1]);
 
-        initPrimsShortestPath(nodes, edges);
+        initPrimsMST(nodes, edges);
 
         for (int i = 1; i <= edges; i++) {
             string[] all_edge = lines[i].Split(' ');
@@ -92,7 +92,7 @@ public class PrimsShortestPath {
         }
 
         int source = int.Parse(lines[edges+1]);
-        prims_shortest_path(source);
+        prims_mst(source);
         print_distance(source);
     }
 }

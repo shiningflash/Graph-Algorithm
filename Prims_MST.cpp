@@ -73,7 +73,7 @@ void print_MST(int source, int nodes) {
 }
 
 int main() {
-    freopen("in", "r", stdin);
+    // freopen("in", "r", stdin);
 
     int nodes, edges, u, v, w;
     cin >> nodes >> edges;
