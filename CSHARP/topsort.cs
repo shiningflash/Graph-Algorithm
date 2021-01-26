@@ -1,68 +1,69 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
-public class BFS {
+public class TopSort {
     
-    public int nodes, edges;
-    public List <int>[] graph;
-    public bool[] vis;
+    int nodes, edges;
+    List <int>[] graph;
+    int[] vis;
 
-    public BFS() {
+    public TopSort() {
 
     }
 
-    public void initBFS(int nodes, int edges) {
+    public void initTopSort(int nodes, int edges) {
         this.nodes = nodes;
         this.edges = edges;
 
-        graph = new List<int>[nodes];
-        vis = new bool[nodes];
-        
-        for (int i = 0; i < nodes; i++) {
+        graph = new List<int>[nodes+1];
+        vis = new int[nodes+1];
+
+        for (int i = 1; i <= nodes; i++) {
+            vis[i] = 0;
             graph[i] = new List<int>();
         }
     }
 
-    public void bfs(int u) {
+    public void topsort() {
         Queue <int> q = new Queue<int>();
-        q.Enqueue(u);
-        vis[u] = true;
+
+        for (int i = 1; i <= nodes; i++) {
+            if (vis[i] == 0) {
+                q.Enqueue(i);
+            }
+        }
 
         while (q.Count > 0) {
-            u = q.Dequeue();
+            int u = q.Dequeue();
             Console.Write("{0} ", u);
 
             for (int i = 0; i < graph[u].Count; i++) {
                 int v = graph[u][i];
-                if (vis[i] == false) {
+                vis[v]--;
+
+                if (vis[v] == 0) {
                     q.Enqueue(v);
-                    vis[v] = true;
                 }
             }
         }
     }
 
-    public void manageBFS(string[] lines) {
-        
+    public void manageTopSort(string[] lines) {
         string[] line1 = lines[0].Split(' ');
         int nodes = int.Parse(line1[0]);
         int edges = int.Parse(line1[1]);
 
-        initBFS(nodes, edges);
+        initTopSort(nodes, edges);
 
         for (int i = 1; i <= edges; i++) {
             string[] all_edge = lines[i].Split(' ');
             int u = int.Parse(all_edge[0]);
             int v = int.Parse(all_edge[1]);
             graph[u].Add(v);
+            vis[v]++;
         }
 
-        for (int i = 0; i < nodes; i++) {
-            if (vis[i] == false) {
-                bfs(i);
-            }
-        }
+        topsort();
 
         Console.WriteLine();
     }

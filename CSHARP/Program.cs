@@ -7,7 +7,13 @@ public class Program {
         // BFS bfs = new BFS();
         // bfs.manageBFS(lines);
 
-        DFS dfs = new DFS();
-        dfs.manageDFS(lines);
+        // DFS dfs = new DFS();
+        // dfs.manageDFS(lines);
+
+        // TopSort ts = new TopSort();
+        // ts.manageTopSort(lines);
+
+        Dijkstra dijkstra = new Dijkstra();
+        dijkstra.manageDijkstra(lines);
     }
 }

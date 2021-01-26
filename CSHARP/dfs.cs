@@ -16,8 +16,9 @@ public class DFS {
         this.edges = edges;
 
         graph = new List<int>[nodes];
+        vis = new bool[nodes];
+        
         for (int i = 0; i < nodes; i++) {
-            vis = new bool[nodes];
             graph[i] = new List<int>();
         }
     }
