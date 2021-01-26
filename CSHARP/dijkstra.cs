@@ -15,7 +15,6 @@ public class Dijkstra {
     public int nodes, edges;
     public List <Node>[] graph;
     public int[] dis;
-    public bool[] vis;
 
     public Dijkstra() {
 
@@ -26,7 +25,6 @@ public class Dijkstra {
         this.edges = edges;
 
         dis = new int[nodes+1];
-        vis = new bool[nodes+1];
         graph = new List<Node>[nodes+1];
 
         for (int i = 1; i <= nodes; i++) {
@@ -34,35 +32,26 @@ public class Dijkstra {
         }
     }
 
-    public int minDistance() {
-        int minVal = int.MaxValue, minIdx = -1;
-        for (int i = 1; i <= nodes; i++) {
-            if (vis[i] == false && dis[i] < minVal) {
-                minVal = dis[i];
-                minIdx = i;
-            }
-        }
-        return minIdx;
-    }
-
     public void dijkstra(int source) {
         for (int i = 1; i <= nodes; i++) {
             dis[i] = int.MaxValue;
-            vis[i] = false;
         }
 
+        PriorityQueue pq = new PriorityQueue(nodes+1);
+
+        pq.Push(source);
         dis[source] = 0;
 
-        for (int i = 1; i < nodes; i++) {
-            int u = minDistance();
-            vis[u] = true;
+        while (!pq.isEmpty()) {
+            int u = pq.Pop();
 
             for (int j = 0; j < graph[u].Count; j++) {
                 int v = graph[u][j].v;
                 int w = graph[u][j].w;
 
-                if (vis[v] == false && dis[u] + w < dis[v]) {
+                if (dis[u] + w < dis[v]) {
                     dis[v] = dis[u] + w;
+                    pq.Push(v);
                 }
             }
         }

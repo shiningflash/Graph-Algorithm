@@ -14,8 +14,8 @@ public class Program {
         // TopSort ts = new TopSort();
         // ts.manageTopSort(lines);
 
-        // Dijkstra dijkstra = new Dijkstra();
-        // dijkstra.manageDijkstra(lines);
+        Dijkstra dijkstra = new Dijkstra();
+        dijkstra.manageDijkstra(lines);
 
         // PrimsMST pmst = new PrimsMST();
         // pmst.managePrimsMST(lines);
@@ -32,14 +32,23 @@ public class Program {
         // CycleDetection cd = new CycleDetection();
         // cd.manageCycleDetection(lines);
 
-        MinHeap h = new MinHeap(10);
-        h.Push(10);
-        h.Push(6);
-        h.Push(34);
-        Console.WriteLine(h.Pop());
-        Console.WriteLine(h.Pop());
-        h.Push(1);
-        Console.WriteLine(h.Pop());
+        // MinHeap h = new MinHeap(10);
+        // h.Push(10);
+        // h.Push(6);
+        // h.Push(34);
+        // Console.WriteLine(h.Pop());
+        // Console.WriteLine(h.Pop());
+        // h.Push(1);
+        // Console.WriteLine(h.Pop());
+
+        // PriorityQueue p = new PriorityQueue(10);
+        // p.Push(10);
+        // p.Push(6);
+        // p.Push(34);
+        // Console.WriteLine(p.Pop());
+        // Console.WriteLine(p.Pop());
+        // p.Push(1);
+        // Console.WriteLine(p.Pop());
 
     }
 }
