@@ -26,8 +26,11 @@ public class Program {
         // SCC scc = new SCC();
         // scc.manageSCC(lines);
 
-        CountTree ct = new CountTree();
-        ct.manageCountTree(lines);
+        // CountTree ct = new CountTree();
+        // ct.manageCountTree(lines);
+
+        CycleDetection cd = new CycleDetection();
+        cd.manageCycleDetection(lines);
 
     }
 }
