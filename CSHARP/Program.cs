@@ -29,8 +29,17 @@ public class Program {
         // CountTree ct = new CountTree();
         // ct.manageCountTree(lines);
 
-        CycleDetection cd = new CycleDetection();
-        cd.manageCycleDetection(lines);
+        // CycleDetection cd = new CycleDetection();
+        // cd.manageCycleDetection(lines);
+
+        MinHeap h = new MinHeap(10);
+        h.Push(10);
+        h.Push(6);
+        h.Push(34);
+        Console.WriteLine(h.Pop());
+        Console.WriteLine(h.Pop());
+        h.Push(1);
+        Console.WriteLine(h.Pop());
 
     }
 }

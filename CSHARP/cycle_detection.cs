@@ -1,3 +1,12 @@
+/*
+      __Detect Cycle in a Undirected Graph
+      __Complexity O(V+E)
+                       _
+       _|_ o._ o._  __|_| _. _|_
+      _>| ||| ||| |(_|| |(_|_>| |
+                    _|
+*/
+
 using System;
 using System.Collections.Generic;
 
