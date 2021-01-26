@@ -82,7 +82,7 @@ class MinHeap {
         if (curHeapSize <= 0) {
             return int.MaxValue;
         }
-        if (curHeapSize == 0) {
+        if (curHeapSize == 1) {
             curHeapSize--;
             return heapArray[0];
         }
