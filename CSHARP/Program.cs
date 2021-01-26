@@ -20,8 +20,11 @@ public class Program {
         // PrimsMST pmst = new PrimsMST();
         // pmst.managePrimsMST(lines);
 
-        KruskalMST kmst = new KruskalMST();
-        kmst.manageKruskalMST(lines);
+        // KruskalMST kmst = new KruskalMST();
+        // kmst.manageKruskalMST(lines);
+
+        SCC scc = new SCC();
+        scc.manageSCC(lines);
 
     }
 }
