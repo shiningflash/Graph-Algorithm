@@ -23,8 +23,11 @@ public class Program {
         // KruskalMST kmst = new KruskalMST();
         // kmst.manageKruskalMST(lines);
 
-        SCC scc = new SCC();
-        scc.manageSCC(lines);
+        // SCC scc = new SCC();
+        // scc.manageSCC(lines);
+
+        CountTree ct = new CountTree();
+        ct.manageCountTree(lines);
 
     }
 }
