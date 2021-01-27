@@ -50,9 +50,13 @@ public class PrimsMST {
         }
 
         dis[source] = 0;
+        vis[source] = true;
 
-        for (int i = 0; i < nodes-1; i++) {
-            int u = minDistance();
+        PriorityQueue<int> pq = new PriorityQueue<int>();
+        pq.Add(source, 0);
+
+        while (pq.Count() > 0) {
+            int u = pq.RemoveMin();
             vis[u] = true;
 
             for (int j = 0; j < graph[u].Count; j++) {
@@ -62,6 +66,7 @@ public class PrimsMST {
                 if (vis[v] == false && dis[v] > w) {
                     dis[v] =  w;
                     parent[v] = u;
+                    pq.Add(v, dis[v]);
                 }
             }
         }
@@ -106,7 +111,8 @@ public class PrimsMST {
 0 3 1
 2 1 2
 3 2 2
- 
+0
+
  stdout
  -
 ( 0 - 1 ) = 2

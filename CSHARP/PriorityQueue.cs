@@ -1,62 +1,46 @@
 using System;
+using System.Collections.Generic;
 
-public class PriorityQueue {
-    public int[] heap { get; set; }
-    public int capacity { get; set; }
-    public int size { get; set; }
+class MinHeap<T> where T : IComparable<T> {
+    private List <T> heap = new List<T>();
 
-    public PriorityQueue(int capacity) {
-        heap = new int[capacity];
-        this.capacity = capacity;
-        this.size = 0;
-    }
-
-    public int Parent(int n) {
+    private int Parent(int n) {
         return (n - 1) / 2;
     }
 
-    public int Left(int n) {
-        return n * 2 + 1;
+    private int Left(int n) {
+        return 2 * n + 1;
+    } 
+
+    private int Right(int n) {
+        return 2 * n + 2;
     }
 
-    public int Right(int n) {
-        return n * 2 + 2;
-    }
+    public void Add(T element) {
+        heap.Add(element);
 
-    public static void Swap<T>(ref T x, ref T y) {
-        T tmp = x;
-        x = y;
-        y = tmp;
-    }
+        int i = heap.Count - 1;
 
-    public bool Push(int val) {
-        if (size == capacity) return false;
-        
-        int i = size;
-        heap[i] = val;
-        size++;
+        while (i > 0 && heap[i].CompareTo(heap[Parent(i)]) == -1) {
+            T temp = heap[i];
+            heap[i] = heap[Parent(i)];
+            heap[Parent(i)] = temp;
 
-        while (i != 0 && heap[i] < heap[Parent(i)]) {
-            Swap(ref heap[i], ref heap[Parent(i)]);
             i = Parent(i);
         }
-        return true;
     }
 
-    public int Top() {
+    public T Peek() {
         return heap[0];
     }
 
-    public int Pop() {
-        if (size <= 0) return int.MaxValue;
-        if (size == 1) {
-            size--;
-            return heap[0];
-        }
-        
-        int root = heap[0];
+    public T RemoveMin() {
+        T root = heap[0];
+
+        int size = heap.Count;
         heap[0] = heap[size-1];
-        size--;
+        heap.RemoveAt(size-1);
+
         MinHeapify(0);
 
         return root;
@@ -68,30 +52,55 @@ public class PriorityQueue {
 
         int smallest = pos;
 
-        if (l < size && heap[l] < heap[smallest]) smallest = l;
-        if (r < size && heap[r] < heap[smallest]) smallest = r;
+        if (l < heap.Count && heap[l].CompareTo(heap[smallest]) == -1) {
+            smallest = l;
+        }
+        if (r < heap.Count && heap[r].CompareTo(heap[smallest]) == -1) {
+            smallest = r;
+        }
 
-        if (smallest != pos) {
-            Swap(ref heap[pos], ref heap[smallest]);
+        if (pos != smallest) {
+            T temp = heap[pos];
+            heap[pos] = heap[smallest];
+            heap[smallest] = temp;
+
             MinHeapify(smallest);
         }
     }
 
-    public void decreaseVal(int pos, int val) {
-        heap[pos] = val;
+    public int Count() {
+        return heap.Count;
+    }
+}
 
-        while (pos != 0 && heap[pos] < heap[Parent(pos)]) {
-            Swap(ref heap[pos], ref heap[Parent(pos)]);
-            pos = Parent(pos);
+public class PriorityQueue<T> {
+    internal class Node : IComparable<Node> {
+        public int priority;
+        public T obj;
+
+        public int CompareTo(Node other) {
+            return priority.CompareTo(other.priority);
         }
     }
 
-    public void Deleteval(int pos) {
-        decreaseVal(pos, int.MinValue);
-        Pop();
+    private MinHeap <Node> minHeap = new MinHeap<Node>();
+
+    public void Add(T element, int prior) {
+        minHeap.Add(new Node() {
+            obj = element,
+            priority = prior
+        });
     }
 
-    public bool isEmpty() {
-        return size <= 0;
+    public T RemoveMin() {
+        return minHeap.RemoveMin().obj;
+    }
+
+    public T Peek() {
+        return minHeap.Peek().obj;
+    }
+
+    public int Count() {
+        return minHeap.Count();
     }
 }

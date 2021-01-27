@@ -37,13 +37,13 @@ public class Dijkstra {
             dis[i] = int.MaxValue;
         }
 
-        PriorityQueue pq = new PriorityQueue(nodes+1);
+        PriorityQueue<int> pq = new PriorityQueue<int>();
 
-        pq.Push(source);
+        pq.Add(source, 0);
         dis[source] = 0;
 
-        while (!pq.isEmpty()) {
-            int u = pq.Pop();
+        while (pq.Count() > 0) {
+            int u = pq.RemoveMin();
 
             for (int j = 0; j < graph[u].Count; j++) {
                 int v = graph[u][j].v;
@@ -51,7 +51,7 @@ public class Dijkstra {
 
                 if (dis[u] + w < dis[v]) {
                     dis[v] = dis[u] + w;
-                    pq.Push(v);
+                    pq.Add(v, dis[v]);
                 }
             }
         }
